@@ -109,7 +109,7 @@ class BST:
         parent_node = None
         current_node = self._root
         if self._root is None:
-            #check to see if tree is emptys
+            #check to see if tree is empty
             self._root = BSTNode(value)
         else:
             while current_node is not None:
