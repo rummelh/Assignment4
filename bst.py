@@ -175,10 +175,14 @@ class BST:
         pass
 
     def find_min(self) -> object:
-        """
-        TODO: Write your implementation
-        """
-        pass
+        current_node = self._root
+        if current_node is None:
+            return None
+        while current_node.left is not None:
+            current_node = current_node.left
+        return current_node
+
+
 
     def find_max(self) -> object:
         """
