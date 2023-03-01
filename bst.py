@@ -193,10 +193,10 @@ class BST:
         return current_node.value
 
     def is_empty(self) -> bool:
-        """
-        TODO: Write your implementation
-        """
-        pass
+        if root_value is not None:
+            return False
+        else:
+            return True
 
     def make_empty(self) -> None:
         """
