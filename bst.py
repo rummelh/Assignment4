@@ -199,8 +199,7 @@ class BST:
             return True
 
     def make_empty(self) -> None:
-        new_tree = BST()
-        self = new_tree
+        self._root = None
 
 
 # ------------------- BASIC TESTING -----------------------------------------
