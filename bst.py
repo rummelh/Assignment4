@@ -125,10 +125,26 @@ class BST:
 
 
     def remove(self, value: object) -> bool:
-        """
-        TODO: Write your implementation
-        """
-        pass
+        current_node = self._root
+        previous_node = None
+        while current_node is not None:
+            if current_node.value == value:
+                if current_node.left is None and current_node.right is None:
+                    self._remove_no_subtrees(previous_node, current_node)
+                    return True
+                elif current_node.left is not None and current_node.right is not None:
+                    self._remove_two_subtrees(previous_node, current_node)
+                    return True
+                else:
+                    self._remove_one_subtree(previous_node, current_node)
+                    return True
+            elif value < current_node.value:
+                previous_node = current_node
+                current_node = current_node.left
+            else:
+                previous_node = current_node
+                current_node = current_node.right
+        return False
 
     # Consider implementing methods that handle different removal scenarios; #
     # you may find that you're able to use some of them in the AVL.          #
@@ -137,26 +153,58 @@ class BST:
     # Change these methods in any way you'd like.                            #
 
     def _remove_no_subtrees(self, remove_parent: BSTNode, remove_node: BSTNode) -> None:
-        """
-        TODO: Write your implementation
-        """
         # remove node that has no subtrees (no left or right nodes)
-        pass
+        if remove_parent is None:
+            return
+        if remove_node == self._root:
+            self._root == None
+        if remove_parent.left == remove_node:
+            remove_parent.left = None
+        else: remove_parent.right = None
+
+
 
     def _remove_one_subtree(self, remove_parent: BSTNode, remove_node: BSTNode) -> None:
-        """
-        TODO: Write your implementation
-        """
         # remove node that has a left or right subtree (only)
-        pass
+        if remove_node == self._root:
+            if remove_node.left is not None:
+                self._root = remove_node.left
+            else:
+                self._root = remove_node.right
+            return
+        if remove_node.left is not None:
+            add_node = remove_node.left
+        else:
+            add_node = remove_node.right
+        if remove_parent.left == remove_node:
+            remove_parent.left = add_node
+        else:
+            remove_parent.right = add_node
 
     def _remove_two_subtrees(self, remove_parent: BSTNode, remove_node: BSTNode) -> None:
-        """
-        TODO: Write your implementation
-        """
         # remove node that has two subtrees
         # need to find inorder successor and its parent (make a method!)
-        pass
+        right_child = remove_node.right
+        current_node = right_child
+        inorder_successor_parent = None
+        while current_node.left is not None:
+            inorder_successor_parent = current_node
+            current_node = current_node.left
+        inorder_successor = current_node
+        inorder_successor_right = inorder_successor.right
+        if remove_parent.left == remove_node:
+            remove_parent.left = inorder_successor
+        else:
+            remove_parent.right = inorder_successor
+        if inorder_successor_right is not None:
+            if inorder_successor_parent is not None:
+                inorder_successor_parent.left = inorder_successor_right
+            else:
+                inorder_successor_right = remove_node.right
+        inorder_successor.left = remove_node.left
+
+
+
 
     def contains(self, value: object) -> bool:
         current_node = self._root
@@ -176,10 +224,10 @@ class BST:
             parent_node = current_node
             current_node = current_node.left
             if current_node is not None and current_node.left is None:
-                queue.enqueue(current_node)
-                queue.enqueue(parent_node)
+                queue.enqueue(current_node.value)
+                queue.enqueue(parent_node.value)
                 if parent_node.right is not None:
-                    queue.enqueue(parent_node.right)
+                    queue.enqueue(parent_node.right.value)
         return queue
 
     def find_min(self) -> object:
