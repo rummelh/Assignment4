@@ -180,7 +180,7 @@ class BST:
             return None
         while current_node.left is not None:
             current_node = current_node.left
-        return current_node
+        return current_node.value
 
 
 
