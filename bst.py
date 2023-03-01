@@ -159,11 +159,15 @@ class BST:
         pass
 
     def contains(self, value: object) -> bool:
-        """
-        TODO: Write your implementation
-        """
-        pass
-
+        current_node = self._root
+        while current_node is not None:
+            if current_node.value == value:
+                return True
+            elif value < current_node.value:
+                current_node = current_node.left
+            else:
+                current_node = current_node.right
+        return False
     def inorder_traversal(self) -> Queue:
         """
         TODO: Write your implementation
