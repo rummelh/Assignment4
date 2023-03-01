@@ -169,10 +169,18 @@ class BST:
                 current_node = current_node.right
         return False
     def inorder_traversal(self) -> Queue:
-        """
-        TODO: Write your implementation
-        """
-        pass
+        queue = Queue()
+        current_node = self._root
+        parent_node = None
+        while current_node is not None:
+            parent_node = current_node
+            current_node = current_node.left
+            if current_node is not None and current_node.left is None:
+                queue.enqueue(current_node)
+                queue.enqueue(parent_node)
+                if parent_node.right is not None:
+                    queue.enqueue(parent_node.right)
+        return queue
 
     def find_min(self) -> object:
         current_node = self._root
