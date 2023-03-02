@@ -158,10 +158,10 @@ class BST:
     def _remove_no_subtrees(self, remove_parent: BSTNode, remove_node: BSTNode) -> None:
         # remove node that has no subtrees (no left or right nodes)
         if remove_node == self._root:
-            self._root == None
+            self._root = None
             return
         if remove_parent is None:
-            self._root ==None
+            self._root =None
             return
         if remove_parent.left == remove_node:
             remove_parent.left = None
