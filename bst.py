@@ -189,9 +189,6 @@ class BST:
     def _remove_two_subtrees(self, remove_parent: BSTNode, remove_node: BSTNode) -> None:
         # remove node that has two subtrees
         # need to find inorder successor and its parent (make a method!)
-        if remove_parent is None:
-            self._root = remove_node.left
-            return
         right_child = remove_node.right
         current_node = right_child
         inorder_successor_parent = None
@@ -200,6 +197,8 @@ class BST:
             current_node = current_node.left
         inorder_successor = current_node
         inorder_successor_right = inorder_successor.right
+        if remove_node == self._root:
+            self._root = inorder_successor
         if remove_parent.left == remove_node:
             remove_parent.left = inorder_successor
         else:
