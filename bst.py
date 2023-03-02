@@ -3,7 +3,7 @@
 # Course: CS261 - Data Structures
 # Assignment: 4
 # Due Date: 2/27/2023
-# Description:
+# Description: bst
 
 
 import random

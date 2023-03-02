@@ -1,9 +1,9 @@
-# Name:
-# OSU Email:
+# Name: Hannah
+# OSU Email: rummelh@oregonstate.edu
 # Course: CS261 - Data Structures
-# Assignment:
-# Due Date:
-# Description:
+# Assignment: 4
+# Due Date: 2/27/2023
+# Description: avl
 
 
 import random
@@ -100,6 +100,7 @@ class AVL(BST):
     # ------------------------------------------------------------------ #
 
     def add(self, value: object) -> None:
+        """adds avl node"""
         parent_node = None
         current_node = self._root
         new_node = AVLNode(value)
@@ -120,6 +121,7 @@ class AVL(BST):
         n = new_node
         p = n.parent
         while p is not None:
+            self._update_height(p)
             self._rebalance(p)
             p = p.parent
 
@@ -150,6 +152,7 @@ class AVL(BST):
     # Change these methods in any way you'd like.                   #
 
     def _balance_factor(self, node: AVLNode) -> int:
+        """calculates balance factor"""
         if node.left is None:
             left_height = 0
         else:
@@ -174,6 +177,7 @@ class AVL(BST):
         return height
 
     def _rotate_left(self, node: AVLNode) -> AVLNode:
+        """rotates left"""
         child = node.right
         node.right = child.left
         if node.right is not None:
@@ -185,6 +189,7 @@ class AVL(BST):
         return child
 
     def _rotate_right(self, node: AVLNode) -> AVLNode:
+        """rotates right"""
         child = node.left
         node.left = child.right
         if node.left is not None:
@@ -196,6 +201,7 @@ class AVL(BST):
         return child
 
     def _update_height(self, node: AVLNode) -> None:
+        """updates height"""
         left_height = self._get_height(node.left)
         right_height = self._get_height(node.right)
         if left_height >= right_height:
@@ -204,6 +210,7 @@ class AVL(BST):
             node.height = right_height +1
 
     def _rebalance(self, node: AVLNode) -> None:
+        """rebalances"""
         if self._balance_factor(node) < -1:
             if self._balance_factor(node.left) > 0:
                 node.left = self._rotate_left(node.left)
