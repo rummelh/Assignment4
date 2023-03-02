@@ -201,12 +201,11 @@ class BST:
             remove_parent.left = inorder_successor
         else:
             remove_parent.right = inorder_successor
-        if inorder_successor_right is not None:
-            if inorder_successor_parent is not None:
-                inorder_successor_parent.left = inorder_successor_right
-            else:
-                inorder_successor_right = remove_node.right
         inorder_successor.left = remove_node.left
+        if inorder_successor_right is not None:
+            inorder_successor_parent.left = inorder_successor_right
+        else:
+            remove_node.right = inorder_successor_right
 
 
 
