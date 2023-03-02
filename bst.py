@@ -211,9 +211,6 @@ class BST:
         else:
             remove_node.right = None
 
-
-
-
     def contains(self, value: object) -> bool:
         current_node = self._root
         while current_node is not None:
@@ -226,17 +223,14 @@ class BST:
         return False
     def inorder_traversal(self) -> Queue:
         queue = Queue()
-        current_node = self._root
-        parent_node = None
-        while current_node is not None:
-            parent_node = current_node
-            current_node = current_node.left
-            if current_node is not None and current_node.left is None:
-                queue.enqueue(current_node.value)
-                queue.enqueue(parent_node.value)
-                if parent_node.right is not None:
-                    queue.enqueue(parent_node.right.value)
+        self.traversal_help(self._root, queue)
         return queue
+    def traversal_help(self,n, queue):
+        #queue = Queue()
+        if n is not None:
+            self.traversal_help(n.left, queue)
+            queue.enqueue(n.value)
+            self.traversal_help(n.right, queue)
 
     def find_min(self) -> object:
         current_node = self._root
