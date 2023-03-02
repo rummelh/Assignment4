@@ -106,6 +106,7 @@ class BST:
     # ------------------------------------------------------------------ #
 
     def add(self, value: object) -> None:
+        """adds a value to the bst"""
         parent_node = None
         current_node = self._root
         if self._root is None:
@@ -125,6 +126,7 @@ class BST:
 
 
     def remove(self, value: object) -> bool:
+        """removes value from BST, returns true if removed"""
         if value == self._root.value and self._root.left == None and self._root.right == None:
             self._root = None
             return True
@@ -156,6 +158,7 @@ class BST:
     # Change these methods in any way you'd like.                            #
 
     def _remove_no_subtrees(self, remove_parent: BSTNode, remove_node: BSTNode) -> None:
+        """remove node with no subtrees"""
         # remove node that has no subtrees (no left or right nodes)
         if remove_node == self._root:
             self._root = None
@@ -170,6 +173,7 @@ class BST:
 
 
     def _remove_one_subtree(self, remove_parent: BSTNode, remove_node: BSTNode) -> None:
+        """remove node with one subtree and rearranges"""
         # remove node that has a left or right subtree (only)
         if remove_node == self._root:
             if remove_node.left is not None:
@@ -187,6 +191,7 @@ class BST:
             remove_parent.right = add_node
 
     def _remove_two_subtrees(self, remove_parent: BSTNode, remove_node: BSTNode) -> None:
+        """removes node with two subtrees and rearranges """
         # remove node that has two subtrees
         # need to find inorder successor and its parent (make a method!)
         right_child = remove_node.right
@@ -212,6 +217,7 @@ class BST:
             remove_node.right = None
 
     def contains(self, value: object) -> bool:
+        """returns true if node is in bst"""
         current_node = self._root
         while current_node is not None:
             if current_node.value == value:
@@ -222,10 +228,12 @@ class BST:
                 current_node = current_node.right
         return False
     def inorder_traversal(self) -> Queue:
+        """adds inorder traversal to queue"""
         queue = Queue()
         self.traversal_help(self._root, queue)
         return queue
     def traversal_help(self,n, queue):
+        """helper method to be able to take a value as an argument and queue"""
         #queue = Queue()
         if n is not None:
             self.traversal_help(n.left, queue)
@@ -233,6 +241,7 @@ class BST:
             self.traversal_help(n.right, queue)
 
     def find_min(self) -> object:
+        """finds min value of bst"""
         current_node = self._root
         if current_node is None:
             return None
@@ -243,6 +252,7 @@ class BST:
 
 
     def find_max(self) -> object:
+        """finds max value of bst"""
         current_node = self._root
         if current_node is None:
             return None
@@ -251,12 +261,14 @@ class BST:
         return current_node.value
 
     def is_empty(self) -> bool:
+        """returns true if bst is empty"""
         if self._root is not None:
             return False
         else:
             return True
 
     def make_empty(self) -> None:
+        """empties bst"""
         self._root = None
 
 
