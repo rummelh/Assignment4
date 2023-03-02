@@ -197,7 +197,7 @@ class BST:
             current_node = current_node.left
         inorder_successor = current_node
         inorder_successor_right = inorder_successor.right
-        if remove_node == self._root:
+        if remove_parent is None:
             self._root = inorder_successor
         elif remove_parent.left == remove_node:
             remove_parent.left = inorder_successor
