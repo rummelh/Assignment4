@@ -100,10 +100,28 @@ class AVL(BST):
     # ------------------------------------------------------------------ #
 
     def add(self, value: object) -> None:
-        """
-        TODO: Write your implementation
-        """
-        pass
+        parent_node = None
+        current_node = self._root
+        new_node = AVLNode(value)
+        if self._root is None:
+            # check to see if tree is empty
+            self._root = new_node
+        else:
+            while current_node is not None:
+                parent_node = current_node
+                if value < current_node.value:
+                    current_node = current_node.left
+                else:
+                    current_node = current_node.right
+            if value < parent_node.value:
+                parent_node.left = new_node
+            else:
+                parent_node.right = new_node
+        n = new_node
+        p = n.parent
+        while p is not None:
+            self._rebalance(p)
+            p = p.parent
 
     def remove(self, value: object) -> bool:
         """
@@ -132,40 +150,82 @@ class AVL(BST):
     # Change these methods in any way you'd like.                   #
 
     def _balance_factor(self, node: AVLNode) -> int:
-        """
-        TODO: Write your implementation
-        """
-        pass
+        if node.left is None:
+            left_height = 0
+        else:
+            left_height = self._get_height(node.left)
+        if node.right is None:
+            right_height = 0
+        else:
+            right_height = self._get_height(node.right)
+        balance_factor = right_height - left_height
+        return balance_factor
 
     def _get_height(self, node: AVLNode) -> int:
-        """
-        TODO: Write your implementation
-        """
-        pass
+        """finds the height of a given node"""
+        if node is None:
+            return -1
+        current_node = node
+        height = 0
+        while current_node.parent is not None:
+            height +=1
+            current_node = current_node.parent
+        node.height = height
+        return height
 
     def _rotate_left(self, node: AVLNode) -> AVLNode:
-        """
-        TODO: Write your implementation
-        """
-        pass
+        child = node.right
+        node.right = child.left
+        if node.right is not None:
+            node.right.parent = node
+        child.left = node
+        node.parent = child
+        self._update_height(node)
+        self._update_height(child)
+        return child
 
     def _rotate_right(self, node: AVLNode) -> AVLNode:
-        """
-        TODO: Write your implementation
-        """
-        pass
+        child = node.left
+        node.left = child.right
+        if node.left is not None:
+            node.left.parent = node
+        child.right = node
+        node.parent = child
+        self._update_height(node)
+        self._update_height(child)
+        return child
 
     def _update_height(self, node: AVLNode) -> None:
-        """
-        TODO: Write your implementation
-        """
-        pass
+        left_height = self._get_height(node.left)
+        right_height = self._get_height(node.right)
+        if left_height >= right_height:
+            node.height = left_height +1
+        else:
+            node.height = right_height +1
 
     def _rebalance(self, node: AVLNode) -> None:
-        """
-        TODO: Write your implementation
-        """
-        pass
+        if self._balance_factor(node) < -1:
+            if self._balance_factor(node.left) > 0:
+                node.left = self._rotate_left(node.left)
+                node.left.parent = node
+            newSubtreeRoot = self._rotate_right(node)
+            newSubtreeRoot.parent = node.parent
+            if node == node.parent.left:
+                node.parent.left = newSubtreeRoot
+            else:
+                node.parent.right = newSubtreeRoot
+        elif self._balance_factor(node) > 1:
+            if self._balance_factor(node.right) < 0:
+                node.right = self._rotate_right(node.right)
+                node.right.parent = node
+            newSubtreeRoot = self._rotate_left(node)
+            newSubtreeRoot.parent = node.parent
+            if node == node.parent.left:
+                node.parent.left = newSubtreeRoot
+            else:
+                node.parent.right = newSubtreeRoot
+        else:
+            self._update_height(node)
 
 # ------------------- BASIC TESTING -----------------------------------------
 
